@@ -10,7 +10,7 @@ st.title("🖥️ Prediksi Harga Monitor")
 @st.cache_resource
 def load_model():
     try:
-        model = joblib.load('monitor_svr_model.pkl')
+        model = joblib.load('monitor_price_predictor_new.pkl')
         return model
     except Exception as e:
         st.error(f"Gagal memuat model: {str(e)}")
