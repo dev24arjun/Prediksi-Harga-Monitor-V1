@@ -2,49 +2,45 @@ import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.svm import SVR
 
-# Fungsi untuk memuat model
-def load_model():
-    try:
-        model = joblib.load('monitor_price_predictor.pkl')
-        return model
-    except Exception as e:
-        st.error(f"Gagal memuat model: {str(e)}")
-        return None
-
-# Fungsi untuk memprediksi harga
-def predict_price(model, input_data):
-    try:
-        # Konversi input ke DataFrame
-        input_df = pd.DataFrame([input_data])
-        
-        # Konversi tipe data
-        input_df['Screen Size'] = float(input_df['Screen Size'])
-        input_df['refresh_rate'] = int(input_df['refresh_rate'])
-        
-        # Lakukan prediksi
-        prediction = model.predict(input_df)
-        return round(prediction[0], 2)
-    except Exception as e:
-        st.error(f"Error dalam prediksi: {str(e)}")
-        return None
-
-# Fungsi utama
-def main():
-    st.title("🖥️ Prediksi Harga Monitor")
-    st.write("""
-    Aplikasi ini memprediksi harga monitor berdasarkan spesifikasinya menggunakan model SVR.
-    """)
+# Fungsi untuk membuat model default jika loading gagal
+def create_default_model():
+    preprocessor = ColumnTransformer([
+        ('num', StandardScaler(), ['Screen Size', 'refresh_rate']),
+        ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), 
+         ['Resolution', 'Aspect Ratio'])
+    ], remainder='drop')
     
-    # Load model
-    model = load_model()
-    if model is None:
-        st.error("Model tidak dapat dimuat. Pastikan file 'monitor_price_predictor.pkl' tersedia.")
-        return
+    return Pipeline([
+        ('preprocess', preprocessor),
+        ('model', SVR(kernel='rbf', C=10, epsilon=5))
+    ])
+
+def load_model_safe():
+    try:
+        # Coba load model baru terlebih dahulu
+        try:
+            return joblib.load('monitor_price_predictor_new.pkl')
+        except:
+            # Fallback ke model lama jika baru tidak ada
+            return joblib.load('monitor_price_predictor.pkl')
+    except Exception as e:
+        st.warning(f"Gagal memuat model yang disimpan: {str(e)}. Membuat model default...")
+        return create_default_model()
+
+def main():
+    st.title("🖥️ Prediksi Harga Monitor (Fixed Version)")
+    
+    # Load model dengan fallback
+    model = load_model_safe()
     
     # Input form
     with st.form("input_form"):
-        st.subheader("Masukkan Spesifikasi Monitor")
+        st.subheader("Spesifikasi Monitor")
         
         col1, col2 = st.columns(2)
         
@@ -59,20 +55,23 @@ def main():
         submitted = st.form_submit_button("Prediksi Harga")
     
     if submitted:
-        # Buat input data
         input_data = {
             'Screen Size': screen_size,
             'Resolution': resolution,
             'Aspect Ratio': aspect_ratio,
             'refresh_rate': refresh_rate,
-            'Brand': 'Unknown'  # Kolom ini tidak digunakan tapi diperlukan untuk format input
+            'Brand': 'Unknown'  # placeholder
         }
         
-        # Lakukan prediksi
-        prediction = predict_price(model, input_data)
-        
-        if prediction is not None:
-            st.success(f"Perkiraan harga monitor: ${prediction:,.2f}")
+        try:
+            input_df = pd.DataFrame([input_data])
+            input_df['Screen Size'] = float(input_df['Screen Size'])
+            input_df['refresh_rate'] = int(input_df['refresh_rate'])
+            
+            prediction = model.predict(input_df)
+            st.success(f"Perkiraan harga: ${prediction[0]:,.2f}")
+        except Exception as e:
+            st.error(f"Error prediksi: {str(e)}")
 
 if __name__ == "__main__":
     main()
