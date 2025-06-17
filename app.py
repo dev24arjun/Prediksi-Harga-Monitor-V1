@@ -25,10 +25,12 @@ if 'history' not in st.session_state:
 
 # ==== Nilai dropdown ====
 RESOLUTIONS = ['Others', '2K', '3K', '4K', '5K', '8K', 'FHD', 'HD', 'OLED', 'QHD', 'UHD']
-ASPECT_RATIOS = ['Unknown', '4:03', '16:09', '16:10', '17:09', '21:09', '32:09', '1.27:1', '1.38:1', '1.76:1', '1.77:1','1.78:1','2.30:1','2.35:1','2.40:1']
-BRANDS = ['acer', 'Alienware', 'ALOGIC','ANGEL POS','Anmite','AOC', 'AOPEN','ARZOPA','ASUS', 'AUO', 'BenQ', 'Cevaton', 'BOSII','CIDETTY','cocopar','CRUA','Deco Gear','Dell','DIYmalls',
-         'domyfan','Duex','Elo','Fiodio','GIGABYTE','HP','iChawk','INNOCN','InnoView','kasorey','Kensington','KOORUI','KTC','KYY','Lenovo','LESOWN','LG','LILLIPUT','Macsecor','MP','MSI','NEC','Neway','PHILIPS','Philips Computer Monitors','Monitors','Pixio','Planar','Poly','QQH','SAMSUNG',
-         'Spectre','SANSUI','SideTrak','Targus','Teamgee','Thermaltake','Tilta','TouchWo','ViewSonic','XGaming','Z Z-EDGE']
+ASPECT_RATIOS = ['Unknown', '4:03', '16:09', '16:10', '17:09', '21:09', '32:09', '1.27:1', '1.38:1', '1.76:1', '1.77:1', '1.78:1', '2.30:1', '2.35:1', '2.40:1']
+BRANDS = ['acer', 'Alienware', 'ALOGIC', 'ANGEL POS', 'Anmite', 'AOC', 'AOPEN', 'ARZOPA', 'ASUS', 'AUO', 'BenQ', 'Cevaton', 'BOSII', 'CIDETTY', 'cocopar', 'CRUA',
+          'Deco Gear', 'Dell', 'DIYmalls', 'domyfan', 'Duex', 'Elo', 'Fiodio', 'GIGABYTE', 'HP', 'iChawk', 'INNOCN', 'InnoView', 'kasorey', 'Kensington',
+          'KOORUI', 'KTC', 'KYY', 'Lenovo', 'LESOWN', 'LG', 'LILLIPUT', 'Macsecor', 'MP', 'MSI', 'NEC', 'Neway', 'PHILIPS', 'Philips Computer Monitors',
+          'Monitors', 'Pixio', 'Planar', 'Poly', 'QQH', 'SAMSUNG', 'Spectre', 'SANSUI', 'SideTrak', 'Targus', 'Teamgee', 'Thermaltake', 'Tilta', 'TouchWo',
+          'ViewSonic', 'XGaming', 'Z Z-EDGE']
 
 # ==== Form input ====
 with st.form("form_prediksi"):
@@ -49,33 +51,33 @@ with st.form("form_prediksi"):
             'refresh_rate': refresh_rate
         }
 
-       dummy_columns = [
-    # ==== Resolution ====
-    'Resolution_2K', 'Resolution_3K', 'Resolution_4K', 'Resolution_5K', 'Resolution_8K',
-    'Resolution_FHD', 'Resolution_HD', 'Resolution_OLED', 'Resolution_QHD', 'Resolution_UHD',
+        dummy_columns = [
+            # ==== Resolution ====
+            'Resolution_2K', 'Resolution_3K', 'Resolution_4K', 'Resolution_5K', 'Resolution_8K',
+            'Resolution_FHD', 'Resolution_HD', 'Resolution_OLED', 'Resolution_QHD', 'Resolution_UHD',
 
-    # ==== Aspect Ratio ====
-    'Aspect Ratio_Unknown', 'Aspect Ratio_4:03', 'Aspect Ratio_16:09', 'Aspect Ratio_16:10',
-    'Aspect Ratio_17:09', 'Aspect Ratio_21:09', 'Aspect Ratio_32:09',
-    'Aspect Ratio_1.27:1', 'Aspect Ratio_1.38:1', 'Aspect Ratio_1.76:1', 'Aspect Ratio_1.77:1',
-    'Aspect Ratio_1.78:1', 'Aspect Ratio_2.30:1', 'Aspect Ratio_2.35:1', 'Aspect Ratio_2.40:1',
+            # ==== Aspect Ratio ====
+            'Aspect Ratio_Unknown', 'Aspect Ratio_4:03', 'Aspect Ratio_16:09', 'Aspect Ratio_16:10',
+            'Aspect Ratio_17:09', 'Aspect Ratio_21:09', 'Aspect Ratio_32:09',
+            'Aspect Ratio_1.27:1', 'Aspect Ratio_1.38:1', 'Aspect Ratio_1.76:1',
+            'Aspect Ratio_1.77:1', 'Aspect Ratio_1.78:1', 'Aspect Ratio_2.30:1',
+            'Aspect Ratio_2.35:1', 'Aspect Ratio_2.40:1',
 
-    # ==== Brand ====
-    'Brand_acer', 'Brand_Alienware', 'Brand_ALOGIC', 'Brand_ANGEL POS', 'Brand_Anmite',
-    'Brand_AOC', 'Brand_AOPEN', 'Brand_ARZOPA', 'Brand_ASUS', 'Brand_AUO',
-    'Brand_BenQ', 'Brand_Cevaton', 'Brand_BOSII', 'Brand_CIDETTY', 'Brand_cocopar',
-    'Brand_CRUA', 'Brand_Deco Gear', 'Brand_Dell', 'Brand_DIYmalls', 'Brand_domyfan',
-    'Brand_Duex', 'Brand_Elo', 'Brand_Fiodio', 'Brand_GIGABYTE', 'Brand_HP',
-    'Brand_iChawk', 'Brand_INNOCN', 'Brand_InnoView', 'Brand_kasorey', 'Brand_Kensington',
-    'Brand_KOORUI', 'Brand_KTC', 'Brand_KYY', 'Brand_Lenovo', 'Brand_LESOWN',
-    'Brand_LG', 'Brand_LILLIPUT', 'Brand_Macsecor', 'Brand_MP', 'Brand_MSI',
-    'Brand_NEC', 'Brand_Neway', 'Brand_PHILIPS', 'Brand_Philips Computer Monitors',
-    'Brand_Monitors', 'Brand_Pixio', 'Brand_Planar', 'Brand_Poly', 'Brand_QQH',
-    'Brand_SAMSUNG', 'Brand_Spectre', 'Brand_SANSUI', 'Brand_SideTrak', 'Brand_Targus',
-    'Brand_Teamgee', 'Brand_Thermaltake', 'Brand_Tilta', 'Brand_TouchWo', 'Brand_ViewSonic',
-    'Brand_XGaming', 'Brand_Z Z-EDGE'
-]
-
+            # ==== Brand ====
+            'Brand_acer', 'Brand_Alienware', 'Brand_ALOGIC', 'Brand_ANGEL POS', 'Brand_Anmite',
+            'Brand_AOC', 'Brand_AOPEN', 'Brand_ARZOPA', 'Brand_ASUS', 'Brand_AUO',
+            'Brand_BenQ', 'Brand_Cevaton', 'Brand_BOSII', 'Brand_CIDETTY', 'Brand_cocopar',
+            'Brand_CRUA', 'Brand_Deco Gear', 'Brand_Dell', 'Brand_DIYmalls', 'Brand_domyfan',
+            'Brand_Duex', 'Brand_Elo', 'Brand_Fiodio', 'Brand_GIGABYTE', 'Brand_HP',
+            'Brand_iChawk', 'Brand_INNOCN', 'Brand_InnoView', 'Brand_kasorey', 'Brand_Kensington',
+            'Brand_KOORUI', 'Brand_KTC', 'Brand_KYY', 'Brand_Lenovo', 'Brand_LESOWN',
+            'Brand_LG', 'Brand_LILLIPUT', 'Brand_Macsecor', 'Brand_MP', 'Brand_MSI',
+            'Brand_NEC', 'Brand_Neway', 'Brand_PHILIPS', 'Brand_Philips Computer Monitors',
+            'Brand_Monitors', 'Brand_Pixio', 'Brand_Planar', 'Brand_Poly', 'Brand_QQH',
+            'Brand_SAMSUNG', 'Brand_Spectre', 'Brand_SANSUI', 'Brand_SideTrak', 'Brand_Targus',
+            'Brand_Teamgee', 'Brand_Thermaltake', 'Brand_Tilta', 'Brand_TouchWo', 'Brand_ViewSonic',
+            'Brand_XGaming', 'Brand_Z Z-EDGE'
+        ]
 
         for col in dummy_columns:
             input_data[col] = 0
