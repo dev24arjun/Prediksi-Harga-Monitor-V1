@@ -100,6 +100,3 @@ if st.session_state.history:
     df_hist['Prediksi'] = df_hist['Prediksi'].apply(lambda x: f"${x:,.2f}")
     st.dataframe(df_hist, use_container_width=True)
 
-    st.markdown("### 📊 Grafik Prediksi Harga")
-    chart_df = pd.DataFrame(st.session_state.history)[['Prediksi']]
-    st.bar_chart(chart_df)
